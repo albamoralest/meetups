@@ -1,0 +1,76 @@
+#================== DBPEDIA QUERY
+#==========PEOPLE related to music born between 1700 and 1947
+# this category is for people in music such as composers, 
+
+prefix skos: <http://www.w3.org/2004/02/skos/core#>
+prefix dbo: <http://dbpedia.org/ontology/>
+select distinct ?s ?birth ?p
+where {
+?s <http://purl.org/dc/terms/subject>/skos:broader{0,5} <http://dbpedia.org/resource/Category:People> .
+#?s <http://purl.org/dc/terms/subject>/skos:broader{0,5} <http://dbpedia.org/resource/Category:Music> .
+?s ?p dbo:MusicalArtist .
+?s dbo:birthDate ?birth .
+FILTER (?birth >= "1700-01-01"^^xsd:date && ?birth <= "1947-12-31"^^xsd:date)
+}limit 100
+
+======= count
+prefix skos: <http://www.w3.org/2004/02/skos/core#>
+prefix dbo: <http://dbpedia.org/ontology/>
+select (count(distinct (?s)) as ?c)
+where {
+?s <http://purl.org/dc/terms/subject>/skos:broader{0,5} <http://dbpedia.org/resource/Category:People> .
+#?s <http://purl.org/dc/terms/subject>/skos:broader{0,5} <http://dbpedia.org/resource/Category:Music> .
+?s ?p dbo:MusicalArtist .
+?s dbo:birthDate ?birth .
+FILTER (?birth >= "1700-01-01"^^xsd:date && ?birth <= "1947-12-31"^^xsd:date)
+}#11198
+
+#==========MUSIC PEOPLE related to music born between 1700 and 1947
+#total 7587
+# this category inclues more types of people related to music, such as writers, music historians, journalist, promoters, video directors
+# I think it may be a good idea to start with a smaller sample
+
+prefix skos: <http://www.w3.org/2004/02/skos/core#>
+prefix dbo: <http://dbpedia.org/ontology/>
+select distinct ?s ?birth
+where {
+?s <http://purl.org/dc/terms/subject>/skos:broader{0,5} <http://dbpedia.org/resource/Category:People> .
+#?s <http://purl.org/dc/terms/subject>/skos:broader{0,5} <http://dbpedia.org/resource/Category:Music> .
+?s <http://purl.org/dc/terms/subject>/skos:broader{0,5} <http://dbpedia.org/resource/Category:Music_people> .
+?s dbo:birthDate ?birth .
+FILTER (?birth >= "1700-01-01"^^xsd:date && ?birth <= "1947-12-31"^^xsd:date)
+}
+limit 100
+
+#=======prefix skos: <http://www.w3.org/2004/02/skos/core#>
+prefix dbo: <http://dbpedia.org/ontology/>
+select count(distinct ?s )
+where {
+?s <http://purl.org/dc/terms/subject>/skos:broader{0,5} <http://dbpedia.org/resource/Category:People> .
+#?s <http://purl.org/dc/terms/subject>/skos:broader{0,5} <http://dbpedia.org/resource/Category:Music> .
+?s <http://purl.org/dc/terms/subject>/skos:broader{0,5} <http://dbpedia.org/resource/Category:Music_people> .
+?s dbo:birthDate ?birth .
+FILTER (?birth >= "1700-01-01"^^xsd:date && ?birth <= "1947-12-31"^^xsd:date)
+}
+
+
+
+is foaf:primaryTopic of	
+
+    wikipedia-en:Django_Reinhardt
+    
+#=======================================list of people in music with their birth dates and wikiId
+
+prefix skos: <http://www.w3.org/2004/02/skos/core#>
+prefix dbo: <http://dbpedia.org/ontology/>
+select distinct ?s ?birth ?id
+where {
+?s <http://purl.org/dc/terms/subject>/skos:broader{0,5} <http://dbpedia.org/resource/Category:People> .
+#?s <http://purl.org/dc/terms/subject>/skos:broader{0,5} <http://dbpedia.org/resource/Category:Music> .
+?s <http://purl.org/dc/terms/subject>/skos:broader{0,5} <http://dbpedia.org/resource/Category:Music_people> .
+?s dbo:birthDate ?birth .
+?s dbo:wikiPageID ?id
+FILTER (?birth >= "1700-01-01"^^xsd:date && ?birth <= "1947-12-31"^^xsd:date)
+}
+limit 100
+
